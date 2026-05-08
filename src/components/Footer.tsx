@@ -12,7 +12,7 @@ export function Footer() {
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <Image
-                src="/ICON WHITE.svg"
+                src="/icon-white.svg"
                 alt="Logo Rahastha Bina Unggul"
                 width={40}
                 height={40}

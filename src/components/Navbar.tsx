@@ -34,7 +34,7 @@ export function Navbar() {
           {/* Logo */}
           <a href="#beranda" className="flex items-center gap-2 group">
             <Image
-              src="/ICON FULL.svg"
+              src="/icon-full.svg"
               alt="Logo Rahastha Bina Unggul"
               width={40}
               height={40}

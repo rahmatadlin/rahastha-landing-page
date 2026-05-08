@@ -1,115 +1,165 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 
+const heroStats = [
+  { value: 10, label: "Mitra Prinsipal", prefix: "+", suffix: "" },
+  { value: 20, label: "Klien Perkebunan", prefix: "+", suffix: "" },
+  { value: 100, label: "Komitmen", prefix: "", suffix: "%" },
+];
+
+function CountUp({
+  target,
+  prefix = "",
+  suffix = "",
+  duration = 1400,
+}: {
+  target: number;
+  prefix?: string;
+  suffix?: string;
+  duration?: number;
+}) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const start = performance.now();
+    let frameId = 0;
+
+    const tick = (timestamp: number) => {
+      const progress = Math.min((timestamp - start) / duration, 1);
+      // easeOutCubic for smoother finish
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(target * eased));
+
+      if (progress < 1) {
+        frameId = requestAnimationFrame(tick);
+      }
+    };
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, [duration, target]);
+
+  return (
+    <>
+      {prefix}
+      {count}
+      {suffix}
+    </>
+  );
+}
+
 export function HeroSection() {
+  const { scrollY } = useScroll();
+  const backgroundY = useTransform(scrollY, [0, 800], [0, 120]);
+
   return (
     <section
       id="beranda"
-      className="relative min-h-screen bg-gradient-to-br from-[#0a3d0e] via-[#1B5E20] to-[#2E7D32] flex items-center pt-20"
+      className="relative min-h-screen flex items-center pt-20 overflow-hidden"
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="leaf-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
-              <circle cx="30" cy="30" r="1.5" fill="white" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#leaf-pattern)" />
-        </svg>
-      </div>
+      {/* Parallax background (halus) */}
+      <motion.div
+        className="absolute inset-x-0 -top-24 -bottom-24"
+        style={{ y: backgroundY }}
+        aria-hidden="true"
+      >
+        <Image
+          src="/hero.png"
+          alt="Perkebunan Sawit"
+          fill
+          priority
+          className="object-cover object-[center_68%]"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-linear-to-r from-primary-dark/85 via-primary/70 to-primary/45" />
+      </motion.div>
 
-      <div className="relative max-w-7xl mx-auto px-6 md:px-12 w-full py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full py-16">
+        <div className="max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <span className="inline-block bg-[#C9A227]/20 text-[#C9A227] text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border border-[#C9A227]/30">
               Mitra Strategis Perkebunan Sawit
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-              Mitra Strategis untuk{" "}
-              <span className="text-[#C9A227]">Pertumbuhan Optimal</span>{" "}
-              Perkebunan Sawit
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+              Mitra Strategis untuk
             </h1>
-            <p className="text-green-100 text-lg md:text-xl leading-relaxed mb-8 max-w-xl">
+            <h2 className="mt-1 text-5xl md:text-6xl lg:text-7xl font-extrabold text-secondary leading-[1.05]">
+              Pertumbuhan Optimal
+            </h2>
+            <h3 className="mt-2 text-4xl md:text-5xl lg:text-6xl font-semibold text-white leading-tight">
+              Perkebunan Sawit
+            </h3>
+            <p className="text-green-100 text-lg md:text-xl leading-relaxed mt-6 mb-8 max-w-xl">
               Menyediakan solusi profesional dan inovatif untuk meningkatkan
               produktivitas dan efisiensi di setiap tahap perkebunan sawit.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Button
-                variant="secondary"
-                size="lg"
-                href="#layanan"
+              <motion.div
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Layanan Kami
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                href="#kontak"
-                className="border-white text-white hover:bg-white hover:text-[#1B5E20]"
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  href="#layanan"
+                  className="h-14 px-8 shadow-lg shadow-secondary/30 transition-all duration-300"
+                >
+                  Layanan Kami
+                </Button>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
               >
-                Hubungi Kami
-              </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  href="#kontak"
+                  className="h-14 px-8 border-white text-white hover:bg-white! hover:text-primary! transition-all duration-300"
+                >
+                  Hubungi Kami
+                </Button>
+              </motion.div>
             </div>
 
-            {/* Quick stats */}
-            <div className="mt-12 flex flex-wrap gap-8">
-              {[
-                { value: "+10", label: "Mitra Prinsipal" },
-                { value: "+20", label: "Klien Perkebunan" },
-                { value: "100%", label: "Komitmen" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <p className="text-3xl font-bold text-[#C9A227]">{stat.value}</p>
+            <div className="mt-10 flex flex-wrap gap-8 md:gap-10">
+              {heroStats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: [0, -3, 0] }}
+                  transition={{
+                    opacity: { duration: 0.5, delay: 0.4 + index * 0.12 },
+                    y: {
+                      duration: 3 + index * 0.4,
+                      delay: 0.6 + index * 0.12,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
+                  }}
+                >
+                  <p className="text-3xl font-bold text-secondary">
+                    <CountUp
+                      target={stat.value}
+                      prefix={stat.prefix}
+                      suffix={stat.suffix}
+                      duration={1400 + index * 250}
+                    />
+                  </p>
                   <p className="text-green-200 text-sm mt-1">{stat.label}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
-
-          {/* Right - Image Placeholder */}
-          <div className="relative">
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl aspect-[4/3] flex items-center justify-center">
-                <div className="text-center">
-                  <svg
-                    className="w-24 h-24 text-white/30 mx-auto mb-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
-                  </svg>
-                  <p className="text-white/40 text-sm">Perkebunan Sawit</p>
-                </div>
-              </div>
-            </div>
-            {/* Decorative card */}
-            <div className="absolute -bottom-6 -left-6 bg-[#C9A227] text-white rounded-2xl p-5 shadow-xl">
-              <p className="text-3xl font-bold">2025</p>
-              <p className="text-sm opacity-90 mt-1">Tahun Berdiri</p>
-            </div>
-            <div className="absolute -top-6 -right-6 bg-white rounded-2xl p-5 shadow-xl">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                  <svg width="20" height="20" fill="#1B5E20" viewBox="0 0 24 24">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500">Solusi</p>
-                  <p className="font-bold text-gray-800 text-sm">Berkelanjutan</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </div>
-      </div>
-
-      {/* Wave bottom */}
-      <div className="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 80L1440 80L1440 30C1200 70 960 10 720 40C480 70 240 10 0 30L0 80Z" fill="white" />
-        </svg>
       </div>
     </section>
   );

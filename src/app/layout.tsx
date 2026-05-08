@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   description:
     "PT. Rahastha Bina Unggul menyediakan solusi profesional dan inovatif untuk meningkatkan produktivitas dan efisiensi di setiap tahap perkebunan sawit.",
   keywords: "perkebunan sawit, kelapa sawit, agri solution, nursery, weed management",
+  icons: {
+    icon: "/icon-full.svg",
+    shortcut: "/icon-full.svg",
+    apple: "/icon-full.svg",
+  },
 };
 
 export default function RootLayout({
