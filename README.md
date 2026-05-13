@@ -375,13 +375,22 @@ pm2 restart rahastha-web
 
 Jika hanya perubahan aset statis tanpa dependency baru, bisa skip `npm ci` — tapi untuk konsistensi production, `npm ci` setelah pull tetap disarankan.
 
-**Contoh `deploy.sh`** (simpan di server, mis. `/var/www/rahastha-landing-page/deploy.sh`):
+**Skrip `deploy.sh` (di root repo, ikut `git pull`)**
+
+File `deploy.sh` sudah ada di repository. Di server, setelah clone/pull pertama:
+
+```bash
+cd /var/www/rahastha-landing-page
+chmod +x deploy.sh
+./deploy.sh
+```
+
+Isi skrip (relatif ke folder repo — tidak perlu edit path jika repo dipindah):
 
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
-APP_DIR="/var/www/rahastha-landing-page"
-cd "$APP_DIR"
+cd "$(dirname "$0")"
 git fetch origin
 git pull --ff-only
 npm ci --omit=dev
@@ -390,10 +399,7 @@ pm2 restart rahastha-web
 echo "Deploy selesai."
 ```
 
-```bash
-chmod +x deploy.sh
-./deploy.sh
-```
+**Catatan:** Nama proses PM2 harus sama dengan yang kamu pakai (`rahastha-web`). Jika berbeda, edit baris `pm2 restart ...` di `deploy.sh` atau setel ulang PM2 agar konsisten.
 
 ---
 
