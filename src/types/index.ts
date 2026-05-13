@@ -21,11 +21,6 @@ export interface FeatureItem {
   description: string;
 }
 
-export interface StatItem {
-  value: string;
-  label: string;
-}
-
 export interface ContactInfo {
   phone: string;
   email: string;

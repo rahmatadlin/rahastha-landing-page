@@ -30,16 +30,14 @@ src/
 │   ├── Navbar.tsx        # Sticky navbar + hamburger menu mobile
 │   └── Footer.tsx        # Footer dengan grid info kontak
 ├── sections/
-│   ├── HeroSection.tsx        # Hero dengan gradient green
-│   ├── AboutSection.tsx       # Tentang kami 2-kolom
-│   ├── ServicesSection.tsx    # Layanan 2 kategori (prinsipal & perkebunan)
-│   ├── FeaturesSection.tsx    # 4 keunggulan perusahaan
-│   ├── StatsSection.tsx       # Statistik (tahun berdiri, mitra, klien)
-│   └── CTASection.tsx         # Call-to-action dengan background gelap
+│   ├── HeroSection.tsx        # Hero + background
+│   ├── AboutSection.tsx       # Tentang kami
+│   ├── ServicesSection.tsx    # Layanan (prinsipal & perkebunan)
+│   └── FeaturesSection.tsx    # Keunggulan
 ├── types/
 │   └── index.ts          # TypeScript interfaces
 └── lib/
-    └── data.ts            # Static data (nav items, stats, contact)
+    └── data.ts            # Static data (nav items, contact)
 ```
 
 ---
@@ -468,13 +466,11 @@ du -sh ~/.npm 2>/dev/null
 ## Sections
 
 1. **Navbar** — Sticky dengan smooth scroll & hamburger mobile
-2. **Hero** — Full-height dengan gradient hijau gelap
-3. **Tentang Kami** — 2 kolom dengan placeholder gambar
+2. **Hero** — Hero utama + stat ringkas
+3. **Tentang Kami** — 2 kolom
 4. **Layanan Kami** — 2 kategori (Prinsipal & Perkebunan)
 5. **Keunggulan** — 4 kolom dengan ikon & hover animasi
-6. **Stats** — Background hijau dengan angka-angka pencapaian
-7. **CTA** — Call-to-action dengan gradient gelap
-8. **Footer** — 4 kolom: brand, alamat, kontak, navigasi
+6. **Footer** — Brand, alamat, kontak, navigasi
 
 ---
 

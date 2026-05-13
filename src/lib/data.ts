@@ -1,4 +1,4 @@
-import type { NavItem, StatItem, ContactInfo } from "@/types";
+import type { NavItem, ContactInfo } from "@/types";
 
 export const navItems: NavItem[] = [
   { label: "Beranda", href: "#beranda" },
@@ -6,13 +6,6 @@ export const navItems: NavItem[] = [
   { label: "Layanan", href: "#layanan" },
   { label: "Keunggulan", href: "#keunggulan" },
   { label: "Kontak", href: "#kontak" },
-];
-
-export const stats: StatItem[] = [
-  { value: "2025", label: "Tahun Berdiri" },
-  { value: "+10", label: "Mitra Prinsipal" },
-  { value: "+20", label: "Perusahaan Perkebunan Bermitra" },
-  { value: "100%", label: "Komitmen untuk Solusi Berkelanjutan" },
 ];
 
 export const contactInfo: ContactInfo = {
